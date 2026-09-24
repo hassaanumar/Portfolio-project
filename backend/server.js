@@ -21,6 +21,10 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Portfolio API is running!");
 });
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 
 app.use("/api/projects", projectRoutes);
 app.use("/api/messages", messageRoutes);
@@ -32,6 +36,6 @@ mongoose
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
+app.listen(PORT,"0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
