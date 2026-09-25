@@ -9,13 +9,23 @@ const messageRoutes = require("./routes/messages");
 
 const app = express();
 
-const allowedOrigin = process.env.FRONTEND_URL;
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://portfolio-project-pi-lime.vercel.app",
+];
 
 app.use(
   cors({
-    origin: allowedOrigin || "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
+
 app.use(express.json());
 
 app.get("/", (req, res) => {

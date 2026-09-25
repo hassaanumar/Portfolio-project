@@ -1,5 +1,6 @@
 const API_BASE_URL = "https://portfolio-project-csm7.onrender.com";
 const API_URL = `${API_BASE_URL}/api/projects`;
+const MESSAGES_URL = `${API_BASE_URL}/api/messages`;
 
 export async function getProjects() {
   const res = await fetch(API_URL);
