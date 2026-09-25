@@ -1,4 +1,30 @@
+import { useEffect, useState } from "react";
+import { getProjects } from "../api";
+
 function Home() {
+  const [projects, setProjects] = useState([]);
+  const [loadingProjects, setLoadingProjects] = useState(true);
+
+  useEffect(() => {
+    async function loadProjects() {
+      try {
+        const data = await getProjects();
+
+        const featured = data
+          .filter((project) => project.featured)
+          .slice(0, 3);
+
+        setProjects(featured);
+      } catch (error) {
+        console.error("Failed to load featured projects:", error);
+      } finally {
+        setLoadingProjects(false);
+      }
+    }
+
+    loadProjects();
+  }, []);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#050816] text-white">
 
@@ -21,7 +47,6 @@ function Home() {
 
       {/* Hero */}
       <section className="relative mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl items-center px-6 py-20 lg:px-8">
-
         <div className="grid w-full items-center gap-16 lg:grid-cols-2">
 
           {/* LEFT SIDE */}
@@ -45,14 +70,14 @@ function Home() {
             </p>
 
             <h1 className="text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl">
-              Hassan
+              Hassaan
               <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
                 Umar.
               </span>
             </h1>
 
             <h2 className="mt-6 text-2xl font-semibold text-gray-200 sm:text-3xl">
-              Computer Science Student
+              Web Developer
               <span className="text-gray-500"> & </span>
               <span className="text-cyan-400">
                 Full-Stack Developer
@@ -60,9 +85,10 @@ function Home() {
             </h2>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-gray-400">
-              I build modern, scalable web applications using the
-              MERN stack. I'm passionate about turning ideas into
-              clean, interactive and useful digital experiences.
+              I build responsive websites and full-stack applications,
+              working across custom development, Shopify, WordPress,
+              and the MERN stack. I enjoy turning ideas into polished,
+              functional digital experiences.
             </p>
 
             {/* Buttons */}
@@ -91,17 +117,17 @@ function Home() {
             {/* Tech stack */}
             <div className="mt-12">
               <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">
-                Currently working with
+                Technologies & platforms
               </p>
 
               <div className="flex flex-wrap gap-3">
-
                 {[
                   "React",
                   "Node.js",
-                  "Express",
                   "MongoDB",
                   "JavaScript",
+                  "Shopify",
+                  "WordPress",
                 ].map((tech) => (
                   <span
                     key={tech}
@@ -110,7 +136,6 @@ function Home() {
                     {tech}
                   </span>
                 ))}
-
               </div>
             </div>
 
@@ -154,14 +179,14 @@ function Home() {
                   <p className="pl-5">
                     <span className="text-blue-400">name:</span>{" "}
                     <span className="text-green-300">
-                      "Hassan Umar"
+                      "Hassaan Umar"
                     </span>,
                   </p>
 
                   <p className="pl-5">
                     <span className="text-blue-400">role:</span>{" "}
                     <span className="text-green-300">
-                      "Full-Stack Developer"
+                      "Web & Full-Stack Developer"
                     </span>,
                   </p>
 
@@ -182,6 +207,13 @@ function Home() {
                   </p>
 
                   <p className="pl-5">],</p>
+
+                  <p className="pl-5">
+                    <span className="text-blue-400">experience:</span>{" "}
+                    <span className="text-green-300">
+                      "Web Development"
+                    </span>
+                  </p>
 
                   <p className="pl-5">
                     <span className="text-blue-400">passion:</span>{" "}
@@ -219,27 +251,26 @@ function Home() {
 
               </div>
 
-             {/* Floating Card */}
-<div className="absolute -bottom-25 left-1/2 hidden -translate-x-1/2 rounded-2xl border border-white/10 bg-gray-900/95 px-5 py-4 shadow-2xl backdrop-blur-xl sm:block">
-  <div className="flex items-center gap-4 whitespace-nowrap">
+              {/* Floating Card */}
+              <div className="absolute -bottom-25 left-1/2 hidden -translate-x-1/2 rounded-2xl border border-white/10 bg-gray-900/95 px-5 py-4 shadow-2xl backdrop-blur-xl sm:block">
+                <div className="flex items-center gap-4 whitespace-nowrap">
 
-    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 text-lg">
-      ⚡
-    </div>
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 text-lg">
+                    ⚡
+                  </div>
 
-    <div>
-      <p className="text-xs text-gray-500">
-        Currently
-      </p>
+                  <div>
+                    <p className="text-xs text-gray-500">
+                      Experience
+                    </p>
 
-      <p className="font-semibold text-white">
-        Learning & Building
-      </p>
-    </div>
+                    <p className="font-semibold text-white">
+                      Websites & Web Applications
+                    </p>
+                  </div>
 
-  </div>
-</div>
-
+                </div>
+              </div>
 
             </div>
 
@@ -261,27 +292,334 @@ function Home() {
           </div>
 
           <div className="p-8 text-center">
-            <p className="text-3xl font-bold text-white">React</p>
+            <p className="text-3xl font-bold text-white">Shopify</p>
             <p className="mt-2 text-sm text-gray-500">
-              Frontend
+              E-Commerce
             </p>
           </div>
 
           <div className="p-8 text-center">
-            <p className="text-3xl font-bold text-white">Node</p>
+            <p className="text-3xl font-bold text-white">WordPress</p>
             <p className="mt-2 text-sm text-gray-500">
-              Backend
+              Websites
             </p>
           </div>
 
           <div className="p-8 text-center">
-            <p className="text-3xl font-bold text-white">
-              MongoDB
-            </p>
+            <p className="text-3xl font-bold text-white">Custom</p>
             <p className="mt-2 text-sm text-gray-500">
-              Database
+              Development
             </p>
           </div>
+
+        </div>
+
+      </section>
+      {/* What I Build */}
+      <section className="relative border-t border-white/5 bg-[#050816] px-6 py-24 lg:px-8">
+
+        <div className="mx-auto max-w-7xl">
+
+          {/* Section heading */}
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-400">
+              What I Build
+            </p>
+
+            <h2 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl">
+              Turning ideas into
+              <span className="block bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+                real websites & applications.
+              </span>
+            </h2>
+
+            <p className="mt-6 text-lg leading-8 text-gray-400">
+              From e-commerce stores and business websites to custom
+              applications, I work across different platforms and
+              technologies to build functional and responsive digital
+              experiences.
+            </p>
+          </div>
+
+          {/* Cards */}
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+
+            {/* E-Commerce */}
+            <div className="group rounded-3xl border border-white/10 bg-white/[0.03] p-7 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-cyan-400/[0.04]">
+
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-2xl">
+                🛒
+              </div>
+
+              <h3 className="mt-6 text-xl font-bold">
+                E-Commerce
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-gray-500">
+                Building and customizing online stores, product
+                pages, landing pages, and e-commerce experiences.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  Shopify
+                </span>
+
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  Products
+                </span>
+              </div>
+
+            </div>
+
+            {/* WordPress */}
+            <div className="group rounded-3xl border border-white/10 bg-white/[0.03] p-7 transition duration-300 hover:-translate-y-2 hover:border-purple-400/30 hover:bg-purple-400/[0.04]">
+
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-400/10 text-2xl">
+                🌐
+              </div>
+
+              <h3 className="mt-6 text-xl font-bold">
+                WordPress
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-gray-500">
+                Creating complete WordPress websites, custom pages,
+                landing pages, layouts, and responsive interfaces.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  WordPress
+                </span>
+
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  Elementor
+                </span>
+              </div>
+
+            </div>
+
+            {/* Custom Websites */}
+            <div className="group rounded-3xl border border-white/10 bg-white/[0.03] p-7 transition duration-300 hover:-translate-y-2 hover:border-blue-400/30 hover:bg-blue-400/[0.04]">
+
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-400/10 text-2xl">
+                💻
+              </div>
+
+              <h3 className="mt-6 text-xl font-bold">
+                Custom Websites
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-gray-500">
+                Designing and developing websites from scratch with
+                custom layouts, responsive interfaces, and modern
+                frontend technologies.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  HTML
+                </span>
+
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  CSS
+                </span>
+
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  JavaScript
+                </span>
+              </div>
+
+            </div>
+
+            {/* Full Stack */}
+            <div className="group rounded-3xl border border-white/10 bg-white/[0.03] p-7 transition duration-300 hover:-translate-y-2 hover:border-emerald-400/30 hover:bg-emerald-400/[0.04]">
+
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-400/10 text-2xl">
+                ⚙️
+              </div>
+
+              <h3 className="mt-6 text-xl font-bold">
+                Full-Stack Apps
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-gray-500">
+                Building complete applications with frontend
+                interfaces, backend APIs, databases, authentication,
+                and deployment.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  React
+                </span>
+
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  Node.js
+                </span>
+
+                <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400">
+                  MongoDB
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+      {/* Featured Projects */}
+      <section className="relative border-t border-white/5 bg-white/[0.02] px-6 py-24 lg:px-8">
+
+        <div className="mx-auto max-w-7xl">
+
+          {/* Heading */}
+          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-400">
+                Featured Work
+              </p>
+
+              <h2 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl">
+                Some things I've
+                <span className="block bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+                  built.
+                </span>
+              </h2>
+
+              <p className="mt-6 text-lg leading-8 text-gray-400">
+                A selection of projects I've worked on across web
+                development, e-commerce, and full-stack applications.
+              </p>
+            </div>
+
+            <a
+              href="/projects"
+              className="shrink-0 rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-semibold text-gray-300 transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-400"
+            >
+              View All Projects →
+            </a>
+
+          </div>
+
+          {/* Loading */}
+          {loadingProjects && (
+            <div className="mt-14 text-center text-gray-500">
+              Loading projects...
+            </div>
+          )}
+
+          {/* No featured projects */}
+          {!loadingProjects && projects.length === 0 && (
+            <div className="mt-14 rounded-3xl border border-white/10 bg-white/[0.03] p-10 text-center">
+              <p className="text-lg font-semibold text-gray-300">
+                Featured projects coming soon.
+              </p>
+
+              <p className="mt-2 text-sm text-gray-500">
+                Check out the projects page to see my work.
+              </p>
+            </div>
+          )}
+
+          {/* Project cards */}
+          {!loadingProjects && projects.length > 0 && (
+            <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+
+              {projects.map((project) => (
+                <article
+                  key={project._id}
+                  className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-400/30"
+                >
+
+                  {/* Image */}
+                  {project.imageUrl ? (
+                    <div className="h-56 overflow-hidden">
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex h-56 items-center justify-center bg-gradient-to-br from-cyan-500/10 to-purple-500/10">
+                      <span className="text-5xl">
+                        💻
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Content */}
+                  <div className="p-6">
+
+                    <div className="flex items-start justify-between gap-4">
+
+                      <h3 className="text-xl font-bold text-white">
+                        {project.title}
+                      </h3>
+
+                      <span className="shrink-0 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-400">
+                        Featured
+                      </span>
+
+                    </div>
+
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-gray-500">
+                      {project.description}
+                    </p>
+
+                    {/* Tech stack */}
+                    {project.techStack?.length > 0 && (
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {project.techStack.slice(0, 4).map((tech) => (
+                          <span
+                            key={tech}
+                            className="rounded-lg bg-white/5 px-3 py-1.5 text-xs text-gray-400"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Links */}
+                    <div className="mt-6 flex gap-3">
+
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-gray-950 transition hover:bg-cyan-400"
+                        >
+                          Live Demo
+                        </a>
+                      )}
+
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-gray-300 transition hover:border-cyan-400/40 hover:text-cyan-400"
+                        >
+                          GitHub
+                        </a>
+                      )}
+
+                    </div>
+
+                  </div>
+
+                </article>
+              ))}
+
+            </div>
+          )}
 
         </div>
 
@@ -292,3 +630,4 @@ function Home() {
 }
 
 export default Home;
+
