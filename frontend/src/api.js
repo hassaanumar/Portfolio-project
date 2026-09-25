@@ -1,4 +1,5 @@
-const API_URL = `${import.meta.env.VITE_API_URL}/api/projects`;
+const API_BASE_URL = "https://portfolio-project-csm7.onrender.com";
+const API_URL = `${API_BASE_URL}/api/projects`;
 
 export async function getProjects() {
   const res = await fetch(API_URL);
@@ -63,7 +64,7 @@ export async function deleteProject(id, adminKey) {
 }
 
 export async function sendMessage(message) {
-  const res = await fetch("http://localhost:5001/api/messages", {
+const res = await fetch(`${API_BASE_URL}/api/messages`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -82,7 +83,7 @@ export async function sendMessage(message) {
 
 // GET MESSAGES — ADMIN ONLY
 export async function getMessages(adminKey) {
-  const res = await fetch("http://localhost:5001/api/messages", {
+const res = await fetch(`${API_BASE_URL}/api/messages`, {
     headers: {
       "x-admin-key": adminKey,
     },
@@ -97,7 +98,7 @@ export async function getMessages(adminKey) {
   return data;
 }
 export async function updateMessage(id, read, adminKey) {
-  const res = await fetch(`http://localhost:5001/api/messages/${id}`, {
+const res = await fetch(`${API_BASE_URL}/api/messages/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -116,7 +117,7 @@ export async function updateMessage(id, read, adminKey) {
 }
 
 export async function deleteMessage(id, adminKey) {
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/messages`, {
+const res = await fetch(`${API_BASE_URL}/api/messages/${id}`, {
     method: "DELETE",
     headers: {
       "x-admin-key": adminKey,
